@@ -27,6 +27,10 @@ WORKDIR /var/www/html
 # Copy project
 COPY . .
 
+
+# Create SQLite file inside container
+RUN mkdir -p database && touch database/database.sqlite
+
 # Install Laravel deps
 RUN composer install
 
