@@ -3,6 +3,8 @@ FROM php:8.2-apache
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libzip-dev \
+    libsqlite3-dev \
+    sqlite3 \
     unzip \
     git \
     curl \
