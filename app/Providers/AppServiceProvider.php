@@ -26,6 +26,7 @@ public function boot(): void
             Artisan::call('migrate', [
                 '--force' => true,
             ]);
+            Artisan::call('db:seed', ['--force' => true]);
         } catch (\Exception $e) {
             // prevent crash if migration fails
         }
