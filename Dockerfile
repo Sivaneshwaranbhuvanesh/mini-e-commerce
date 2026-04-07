@@ -10,13 +10,13 @@ RUN apt-get update && apt-get install -y \
     curl \
     && docker-php-ext-install pdo pdo_sqlite zip
 
-# Enable Apache rewrite
+# Enable rewrite
 RUN a2enmod rewrite
 
-# Change Apache root to Laravel public folder
+# Set Apache root to public
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/000-default.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 
 # Install Composer
@@ -27,12 +27,12 @@ WORKDIR /var/www/html
 # Copy project
 COPY . .
 
-# Install Laravel dependencies
+# Install Laravel deps
 RUN composer install
 
-# Permissions
+# Permissions (VERY IMPORTANT)
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
+    && chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
 
