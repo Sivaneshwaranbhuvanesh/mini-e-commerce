@@ -2,6 +2,10 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
+    <IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^ index.php [L]
+    </IfModule>
 
     RewriteEngine On
 
