@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,7 @@ public function boot(): void
                 '--force' => true,
             ]);
             Artisan::call('db:seed', ['--force' => true]);
+            URL::forceScheme('https');
         } catch (\Exception $e) {
             // prevent crash if migration fails
         }
