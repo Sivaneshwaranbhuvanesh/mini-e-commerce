@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Artisan;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,17 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        //
+    
+public function boot(): void
+{
+    if (app()->environment('production')) {
+        try {
+            Artisan::call('migrate', [
+                '--force' => true,
+            ]);
+        } catch (\Exception $e) {
+            // prevent crash if migration fails
+        }
     }
+}
 }
