@@ -28,6 +28,7 @@ public function boot(): void
                 '--force' => true,
             ]);
             Artisan::call('db:seed', ['--force' => true]);
+            Artisan::call('storage:link');
         } catch (\Exception $e) {
             // prevent crash if migration fails
         }
